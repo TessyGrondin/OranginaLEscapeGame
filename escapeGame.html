@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escape Game</title>
+  <meta charset="UTF-8">
+  <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  canvas {
+    border: 1px solid black;
+  }
+  </style>
+</head>
+<body>
+<canvas width="375" height="667" id="game"></canvas>
+<script>
+const canvas = document.getElementById('game');
+const context = canvas.getContext('2d');
+
+let doorHeight = 175;
+let doorWidth  = 80;
+
+let doors = [{type:0, x:80, y:60, activ:false}, {type:0, x:250, y:150, activ:false}, {type:0, x:100, y:350, activ:false}, {type:0, x:270, y:400, activ:false}];
+
+let win = false;
+let gameOver = false;
+let menu = false;
+
+let nbRound = 15;
+
+// let assetsImage = new Image();
+// assetsImage.src = "assets.png"
+// let backgroundImage = new Image();
+// backgroundImage.src = "background.png"
+
+context.fillStyle = 'yellow';
+
+function choseActiv() {
+  let nb = Math.floor(Math.random() * 3) + 2;
+  let possibilities = [0, 1, 2, 3];
+
+  for (let i = 0; i < 4; i++) {
+    doors[i].activ = false;
+    doors[i].type = 0;
+  }
+  for (let i = 0; i < 4 - nb; i++) {
+    let toPop = Math.floor(Math.random() * possibilities.length);
+    possibilities.pop(toPop);
+  }
+  doors[possibilities[Math.floor(Math.random() * possibilities.length)]].type = 1;
+  for (let i = 0; i < possibilities.length; i++)
+    doors[possibilities[i]].activ = true;
+}
+
+choseActiv();
+
+function loop() {
+  requestAnimationFrame(loop);
+  context.clearRect(0,0,canvas.width,canvas.height);
+  // context.drawImage(backgroundImage, 0, 0, 320, 480, 0, 0, canvas.width, canvas.height);
+
+  if (menu) {
+    context.textAlign = "center";
+    context.font = "40px Arial";
+    context.fillText("Appuie pour jouer", canvas.width / 2, canvas.height / 2);
+  } else if (!win && !gameOver) {
+    context.textAlign = "left";
+    doors.forEach(function(door) {
+      if (door.activ) {
+        context.fillRect(door.x, door.y, doorWidth, doorHeight);
+        // context.drawImage(assetsImage, tile.value * 64, 0, 64, 64, tile.x, tile.y, 32, 32);
+      }
+    });
+    if (nbRound <= 0)
+      win = true;
+  } else if (win) {
+    context.textAlign = "center";
+    context.font = "40px Arial";
+    context.fillText("Victoire !", canvas.width / 2, canvas.height / 2 - 40);
+    context.font = "20px Arial";
+    context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
+  } else {
+    context.textAlign = "center";
+    context.font = "40px Arial";
+    context.fillText("Défaite !", canvas.width / 2, canvas.height / 2 - 40);
+    context.font = "20px Arial";
+    context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
+  }
+}
+
+document.addEventListener('click', function(e) {
+  let relativeX = e.x - canvas.offsetLeft;
+  let relativeY = e.y - canvas.offsetTop;
+
+  if (!win && !menu && !gameOver) {
+    doors.forEach(function(door) {
+      if (!door.activ || relativeX < door.x || relativeX > door.x + doorWidth || relativeY < door.y || relativeY > door.y + doorHeight)
+        return;
+      if (door.type == 1) {
+        //lancer animation
+        choseActiv();
+        nbRound--;
+      } else {
+        //lancer animation
+        gameOver = true;
+      }
+    });
+  } else if (menu) {
+    menu = false;
+  } else {
+    choseActiv();
+    win = false;
+    gameOver = false;
+    nbRound = 15;
+    menu = true;
+  }
+ });
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
