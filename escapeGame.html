@@ -54,11 +54,12 @@ function choseActiv() {
   }
   for (let i = 0; i < 4 - nb; i++) {
     let toPop = Math.floor(Math.random() * possibilities.length);
-    possibilities.pop(toPop);
+    possibilities.splice(toPop, 1);
   }
   doors[possibilities[Math.floor(Math.random() * possibilities.length)]].type = 1;
-  for (let i = 0; i < possibilities.length; i++)
+  for (let i = 0; i < possibilities.length; i++) {
     doors[possibilities[i]].activ = true;
+  }
 }
 
 choseActiv();
@@ -75,6 +76,10 @@ function loop() {
   } else if (!win && !gameOver) {
     context.textAlign = "left";
     doors.forEach(function(door) {
+      if (door.type == 1)
+        context.fillStyle = 'green';
+      else
+        context.fillStyle = 'yellow';
       if (door.activ) {
         context.fillRect(door.x, door.y, doorWidth, doorHeight);
         // context.drawImage(assetsImage, tile.value * 64, 0, 64, 64, tile.x, tile.y, 32, 32);
