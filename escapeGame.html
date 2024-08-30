@@ -110,10 +110,11 @@ document.addEventListener('click', function(e) {
         continue;
       if (doors[i].type == 0)
         roundValue = true;
-      else
+      else if (doors[i].type == 1)
         roundValue = false;
       doorToOpen = i;
-      doors[i].type = 2;
+      if (doors[i].type < 2)
+        doors[i].type = 2;
       break;
     }
   } else if (menu) {
