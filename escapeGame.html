@@ -43,8 +43,8 @@ let roundValue = false;
 
 let doorImage = new Image();
 doorImage.src = "door_animation.png"
-// let backgroundImage = new Image();
-// backgroundImage.src = "background.png"
+let backgroundImage = new Image();
+backgroundImage.src = "background.png"
 
 context.fillStyle = 'yellow';
 
@@ -71,13 +71,13 @@ choseActiv();
 function loop() {
   requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
-  // context.drawImage(backgroundImage, 0, 0, 320, 480, 0, 0, canvas.width, canvas.height);
 
   if (menu) {
     context.textAlign = "center";
     context.font = "40px Arial";
     context.fillText("Appuie pour jouer", canvas.width / 2, canvas.height / 2);
   } else if (!win && !gameOver) {
+    context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     context.textAlign = "left";
     doors.forEach(function(door) {
       if (door.activ)
