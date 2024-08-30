@@ -37,8 +37,12 @@ let menu = false;
 
 let nbRound = 15;
 
-// let assetsImage = new Image();
-// assetsImage.src = "assets.png"
+// let animate = false;
+let doorToOpen = -1;
+let frame = 0;
+
+let doorImage = new Image();
+doorImage.src = "door_animation.png"
 // let backgroundImage = new Image();
 // backgroundImage.src = "background.png"
 
@@ -50,13 +54,13 @@ function choseActiv() {
 
   for (let i = 0; i < 4; i++) {
     doors[i].activ = false;
-    doors[i].type = 0;
+    doors[i].type = 1;
   }
   for (let i = 0; i < 4 - nb; i++) {
     let toPop = Math.floor(Math.random() * possibilities.length);
     possibilities.splice(toPop, 1);
   }
-  doors[possibilities[Math.floor(Math.random() * possibilities.length)]].type = 1;
+  doors[possibilities[Math.floor(Math.random() * possibilities.length)]].type = 0;
   for (let i = 0; i < possibilities.length; i++) {
     doors[possibilities[i]].activ = true;
   }
@@ -82,7 +86,7 @@ function loop() {
         context.fillStyle = 'yellow';
       if (door.activ) {
         context.fillRect(door.x, door.y, doorWidth, doorHeight);
-        // context.drawImage(assetsImage, tile.value * 64, 0, 64, 64, tile.x, tile.y, 32, 32);
+        context.drawImage(doorImage, door.type * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, door.x - doorWidth, door.y - 20, doorWidth * 2, doorHeight + 40);
       }
     });
     if (nbRound <= 0)
