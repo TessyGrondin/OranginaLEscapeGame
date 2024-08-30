@@ -29,7 +29,7 @@ const context = canvas.getContext('2d');
 let doorHeight = 175;
 let doorWidth  = 80;
 
-let doors = [{type:0, x:80, y:60, activ:false}, {type:0, x:250, y:150, activ:false}, {type:0, x:100, y:350, activ:false}, {type:0, x:270, y:400, activ:false}];
+let doors = [{type:0, x:80, y:60, activ:false}, {type:0, x:250, y:20, activ:false}, {type:0, x:30, y:350, activ:false}, {type:0, x:210, y:380, activ:false}];
 
 let win = false;
 let gameOver = false;
@@ -49,7 +49,7 @@ doorImage.src = "door_animation.png"
 context.fillStyle = 'yellow';
 
 function choseActiv() {
-  let nb = Math.floor(Math.random() * 3) + 2;
+  let nb = 4;//Math.floor(Math.random() * 3) + 2;
   let possibilities = [0, 1, 2, 3];
 
   for (let i = 0; i < 4; i++) {
@@ -86,7 +86,7 @@ function loop() {
         context.fillStyle = 'yellow';
       if (door.activ) {
         context.fillRect(door.x, door.y, doorWidth, doorHeight);
-        context.drawImage(doorImage, door.type * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, door.x - doorWidth, door.y - 20, doorWidth * 2, doorHeight + 40);
+        context.drawImage(doorImage, door.type * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, door.x - doorWidth * 1.5, door.y - 20 * 1.5, (doorWidth * 2) * 1.5, (doorHeight + 40) * 1.5);
       }
     });
     if (nbRound <= 0)
@@ -112,9 +112,9 @@ document.addEventListener('click', function(e) {
 
   if (!win && !menu && !gameOver) {
     doors.forEach(function(door) {
-      if (!door.activ || relativeX < door.x || relativeX > door.x + doorWidth || relativeY < door.y || relativeY > door.y + doorHeight)
+      if (!door.activ || relativeX < door.x || relativeX > door.x + doorWidth * 1.5 || relativeY < door.y || relativeY > door.y + doorHeight * 1.5)
         return;
-      if (door.type == 1) {
+      if (door.type == 0) {
         //lancer animation
         choseActiv();
         nbRound--;
