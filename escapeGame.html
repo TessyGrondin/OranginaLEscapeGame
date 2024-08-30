@@ -35,11 +35,11 @@ let win = false;
 let gameOver = false;
 let menu = false;
 
-let nbRound = 15;
+let nbRound = 7;
 
-// let animate = false;
 let doorToOpen = -1;
 let frame = 0;
+let roundValue = false;
 
 let doorImage = new Image();
 doorImage.src = "door_animation.png"
@@ -49,7 +49,7 @@ doorImage.src = "door_animation.png"
 context.fillStyle = 'yellow';
 
 function choseActiv() {
-  let nb = 4;//Math.floor(Math.random() * 3) + 2;
+  let nb = Math.floor(Math.random() * 3) + 2;
   let possibilities = [0, 1, 2, 3];
 
   for (let i = 0; i < 4; i++) {
@@ -80,14 +80,8 @@ function loop() {
   } else if (!win && !gameOver) {
     context.textAlign = "left";
     doors.forEach(function(door) {
-      if (door.type == 1)
-        context.fillStyle = 'green';
-      else
-        context.fillStyle = 'yellow';
-      if (door.activ) {
-        context.fillRect(door.x, door.y, doorWidth, doorHeight);
+      if (door.activ)
         context.drawImage(doorImage, door.type * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, door.x - doorWidth * 1.5, door.y - 20 * 1.5, (doorWidth * 2) * 1.5, (doorHeight + 40) * 1.5);
-      }
     });
     if (nbRound <= 0)
       win = true;
@@ -111,28 +105,45 @@ document.addEventListener('click', function(e) {
   let relativeY = e.y - canvas.offsetTop;
 
   if (!win && !menu && !gameOver) {
-    doors.forEach(function(door) {
-      if (!door.activ || relativeX < door.x || relativeX > door.x + doorWidth * 1.5 || relativeY < door.y || relativeY > door.y + doorHeight * 1.5)
-        return;
-      if (door.type == 0) {
-        //lancer animation
-        choseActiv();
-        nbRound--;
-      } else {
-        //lancer animation
-        gameOver = true;
-      }
-    });
+    for (let i = 0; i < doors.length; i++) {
+      if (!doors[i].activ || relativeX < doors[i].x || relativeX > doors[i].x + doorWidth * 1.5 || relativeY < doors[i].y || relativeY > doors[i].y + doorHeight * 1.5)
+        continue;
+      if (doors[i].type == 0)
+        roundValue = true;
+      else
+        roundValue = false;
+      doorToOpen = i;
+      doors[i].type = 2;
+      break;
+    }
   } else if (menu) {
     menu = false;
   } else {
     choseActiv();
     win = false;
     gameOver = false;
-    nbRound = 15;
+    nbRound = 7;
     menu = true;
   }
  });
+
+function animateDoor()
+{
+  if (doorToOpen != -1) {
+    doors[doorToOpen].type++;
+    if (doors[doorToOpen].type > 5) {
+      if (roundValue == false)
+        gameOver = true;
+      else {
+        choseActiv();
+        nbRound--;
+      }
+      doorToOpen = -1;
+    }
+  }
+}
+
+setInterval(animateDoor, 100);
 
 requestAnimationFrame(loop);
 </script>
