@@ -51,6 +51,8 @@ let backgroundImage = new Image();
 backgroundImage.src = "background.png"
 let transitionImage = new Image();
 transitionImage.src = "transition.png"
+let granMerKal = new Image();
+granMerKal.src = "granMerKal.png"
 
 let transitionFrames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 let visible = false;
@@ -84,6 +86,7 @@ function loop() {
   context.clearRect(0,0,canvas.width,canvas.height);
 
   if (menu) {
+    context.fillStyle = 'yellow';
     context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height, -60, -50, canvas.width * 1.5, canvas.height * 1.5);
     context.drawImage(doorImage, menuFrame * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, -doorWidth * 4 + 27, -80, (doorWidth * 4) * 2, (doorHeight  * 2 + 80) * 2);
     if (menuFrame == 0) {
@@ -112,9 +115,11 @@ function loop() {
     context.font = "20px Arial";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
   } else {
+    context.fillStyle = 'red';
+    context.drawImage(granMerKal, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     context.textAlign = "center";
     context.font = "40px Arial";
-    context.fillText("Défaite !", canvas.width / 2, canvas.height / 2 - 40);
+    context.fillText("Défaite !", canvas.width / 2, canvas.height / 2 + 70);
     context.font = "20px Arial";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
   }
@@ -183,6 +188,7 @@ function transition()
     if (transitionFrame == 12) {
       if (menu) {
         menu = false;
+        menuFrame = 0;
         choseActiv();
       } else {
         if (roundValue == false)
