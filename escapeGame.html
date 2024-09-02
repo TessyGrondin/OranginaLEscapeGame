@@ -29,7 +29,14 @@ const context = canvas.getContext('2d');
 let doorHeight = 175;
 let doorWidth  = 80;
 
+let drawWidth;
+let drawHeight;
+
 let doors = [{type:0, x:80, y:60, activ:false}, {type:0, x:250, y:20, activ:false}, {type:0, x:30, y:350, activ:false}, {type:0, x:210, y:380, activ:false}];
+
+let zoomPoints = [];
+for (let i = 0; i < 4; i++)
+  zoomPoints.push({x:doors[i].x + doorWidth * 1.5 / 2, y:doors[i].y + doorHeight * 1.5 / 2});
 
 let win = false;
 let gameOver = false;
@@ -45,6 +52,12 @@ let doorImage = new Image();
 doorImage.src = "door_animation.png"
 let backgroundImage = new Image();
 backgroundImage.src = "background.png"
+let transitionImage = new Image();
+transitionImage.src = "transition.png"
+
+let transitionFrames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
+let visible = false;
+let transitionFrame = -1;
 
 context.fillStyle = 'yellow';
 
@@ -85,6 +98,8 @@ function loop() {
     });
     if (nbRound <= 0)
       win = true;
+    if (transitionFrame != -1)
+      context.drawImage(transitionImage, transitionFrames[transitionFrame] * canvas.width, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
   } else if (win) {
     context.textAlign = "center";
     context.font = "40px Arial";
@@ -103,6 +118,9 @@ function loop() {
 document.addEventListener('click', function(e) {
   let relativeX = e.x - canvas.offsetLeft;
   let relativeY = e.y - canvas.offsetTop;
+
+  if (visible)
+    return;
 
   if (!win && !menu && !gameOver) {
     for (let i = 0; i < doors.length; i++) {
@@ -132,19 +150,34 @@ function animateDoor()
 {
   if (doorToOpen != -1) {
     doors[doorToOpen].type++;
-    if (doors[doorToOpen].type > 5) {
+    if (doors[doorToOpen].type == 5) {
+      visible = true;
+      doorToOpen = -1;
+    }
+  }
+}
+
+function transition()
+{
+  if (visible) {
+    transitionFrame++;
+    if (transitionFrame == 12) {
       if (roundValue == false)
         gameOver = true;
       else {
         choseActiv();
         nbRound--;
       }
-      doorToOpen = -1;
+    }
+    if (transitionFrame == transitionFrames.length) {
+      transitionFrame = -1;
+      visible = false;
     }
   }
 }
 
 setInterval(animateDoor, 100);
+setInterval(transition, 50);
 
 requestAnimationFrame(loop);
 </script>
