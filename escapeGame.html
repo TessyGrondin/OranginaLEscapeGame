@@ -65,6 +65,8 @@ let readyToAnimate = false;
 
 context.fillStyle = 'yellow';
 
+let time = 0;
+
 function choseActiv() {
   context.fillStyle = 'yellow';
   let nb = Math.floor(Math.random() * 3) + 2;
@@ -114,7 +116,7 @@ function loop() {
     context.textAlign = "center";
     context.drawImage(victory, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     context.font = "40px Arial";
-    context.fillText("Victoire !", canvas.width / 2, canvas.height / 2 + 60);
+    context.fillText("Victoire en " + time +"s !", canvas.width / 2, canvas.height / 2 + 60);
     context.font = "20px Arial";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
   } else {
@@ -154,6 +156,7 @@ document.addEventListener('click', function(e) {
     menuFrame = 2;
   } else {
     choseActiv();
+    time = 0;
     win = false;
     gameOver = false;
     nbRound = 7;
@@ -209,9 +212,15 @@ function transition()
   }
 }
 
+function increment() {
+  if (!menu && !win && !gameOver)
+    time++;
+}
+
 setInterval(animateDoor, 100);
 setInterval(animateMenu, 100);
 setInterval(transition, 50);
+setInterval(increment, 1000);
 
 requestAnimationFrame(loop);
 </script>
