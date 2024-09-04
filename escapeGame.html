@@ -29,17 +29,13 @@ const context = canvas.getContext('2d');
 let doorHeight = 175;
 let doorWidth  = 80;
 
-let doors = [{type:0, x:80, y:60, activ:false}, {type:0, x:250, y:20, activ:false}, {type:0, x:30, y:350, activ:false}, {type:0, x:210, y:380, activ:false}];
-
-let zoomPoints = [];
-for (let i = 0; i < 4; i++)
-  zoomPoints.push({x:doors[i].x + doorWidth * 1.5 / 2, y:doors[i].y + doorHeight * 1.5 / 2});
+let doors = [{type:0, x:30, y:180}, {type:0, x:180, y:180}];
 
 let win = false;
 let gameOver = false;
-let menu = true;
+let menu = false;
 
-let nbRound = 7;
+let nbRound = 3;
 
 let doorToOpen = -1;
 let frame = 0;
@@ -64,26 +60,18 @@ let menuFrame = 0;
 let readyToAnimate = false;
 
 context.fillStyle = 'yellow';
+context.textAlign = "center";
 
 let time = 0;
 
 function choseActiv() {
   context.fillStyle = 'yellow';
-  let nb = Math.floor(Math.random() * 3) + 2;
-  let possibilities = [0, 1, 2, 3];
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 2; i++) {
     doors[i].activ = false;
     doors[i].type = 1;
   }
-  for (let i = 0; i < 4 - nb; i++) {
-    let toPop = Math.floor(Math.random() * possibilities.length);
-    possibilities.splice(toPop, 1);
-  }
-  doors[possibilities[Math.floor(Math.random() * possibilities.length)]].type = 0;
-  for (let i = 0; i < possibilities.length; i++) {
-    doors[possibilities[i]].activ = true;
-  }
+  doors[Math.floor(Math.random() * 2)].type = 0;
 }
 
 function loop() {
@@ -94,7 +82,6 @@ function loop() {
     context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height, -60, -50, canvas.width * 1.5, canvas.height * 1.5);
     context.drawImage(doorImage, menuFrame * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, -doorWidth * 4 + 27, -80, (doorWidth * 4) * 2, (doorHeight  * 2 + 80) * 2);
     if (menuFrame == 0) {
-      context.textAlign = "center";
       context.font = "30px Arial";
       context.fillText("T'échapperas-tu du" , canvas.width / 2, 70);
       context.fillText("labyrinthe de portes ?", canvas.width / 2, 100);
@@ -105,15 +92,12 @@ function loop() {
     }
   } else if (!win && !gameOver) {
     context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-    context.textAlign = "left";
     doors.forEach(function(door) {
-      if (door.activ)
-        context.drawImage(doorImage, door.type * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, door.x - doorWidth * 1.5, door.y - 20 * 1.5, (doorWidth * 2) * 1.5, (doorHeight + 40) * 1.5);
+      context.drawImage(doorImage, door.type * (doorWidth * 4), 0, doorWidth * 4, doorHeight  * 2 + 80, door.x - doorWidth * 1.5, door.y - 20 * 1.5, (doorWidth * 2) * 1.5, (doorHeight + 40) * 1.5);
     });
     if (nbRound <= 0)
       win = true;
   } else if (win) {
-    context.textAlign = "center";
     context.drawImage(victory, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     context.font = "40px Arial";
     context.fillText("Victoire en " + time +"s !", canvas.width / 2, canvas.height / 2 + 60);
@@ -121,7 +105,6 @@ function loop() {
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
   } else {
     context.drawImage(granMerKal, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-    context.textAlign = "center";
     context.font = "40px Arial";
     context.fillText("Défaite !", canvas.width / 2, canvas.height / 2 + 70);
     context.font = "20px Arial";
@@ -140,7 +123,7 @@ document.addEventListener('click', function(e) {
 
   if (!win && !menu && !gameOver) {
     for (let i = 0; i < doors.length; i++) {
-      if (!doors[i].activ || relativeX < doors[i].x || relativeX > doors[i].x + doorWidth * 1.5 || relativeY < doors[i].y || relativeY > doors[i].y + doorHeight * 1.5)
+      if (relativeX < doors[i].x || relativeX > doors[i].x + doorWidth * 1.5 || relativeY < doors[i].y || relativeY > doors[i].y + doorHeight * 1.5)
         continue;
       if (doors[i].type == 0)
         roundValue = true;
@@ -159,7 +142,7 @@ document.addEventListener('click', function(e) {
     time = 0;
     win = false;
     gameOver = false;
-    nbRound = 7;
+    nbRound = 3;
     menu = true;
   }
  });
