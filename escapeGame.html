@@ -39,23 +39,21 @@ granMerKal.src = "granMerKal.png"
 let victory = new Image();
 victory.src = "victoire.png"
 let roomImage = new Image();
-roomImage.src = "haunted-house-halloween.gif";
+roomImage.src = "entree.png";
 let buttonImage = new Image();
 buttonImage.src = "button.png";
 let cursor = new Image();
 cursor.src = "cursor.png";
 
-let rooms = ["croisement.jpg", "salleDeBain.jpg", "cour.jpg", "haunted-house-halloween.gif"];
+let rooms = ["croisement.jpg", "salleDeBain.jpg", "cour.jpg", "entree.png"];
 let room = -1;
 
-let clues = ["1ère mission : quelle porte choisiras-tu?\nAttention, la victoire se cache dans les petits détails!", "Bravo, tu as fait le bon choix, te voici maintenant dans la salle de bain. 2 solutions pour s’évader : porte ou fenêtre? A toi de faire le bon choix!", "Tu as l’œil, bravo Enfin tu es proche de la sortie mais attention ce n’est pas fini! La porte du fond me semble bien mystérieuse, pas toi? Peut-être préfère tu passer par le portail"];
+let clues = ["1ère mission :\nquelle porte choisiras-tu?;;;;;;\nAttention, la victoire\nse cache dans les\npetits détails!", "Bravo, tu as fait le bon choix,\nte voici maintenant dans\nla salle de bain.;;;;;;\n2 solutions pour s’évader :\nporte ou fenêtre?;;;;;;\nA toi de faire le bon choix!", "Tu as l’oeil, bravo Enfin tu es proche\nde la sortie mais attention\nce n’est pas fini!;;;;;;\nLa porte du fond me semble\nbien mystérieuse, pas toi?;;;;;;\nPeut-être préfères-tu\npasser par le portail ?"];
 let myFont = new FontFace('okami', 'url(Okami.otf)');
 myFont.load().then(function(font){
   document.fonts.add(font);
 });
 
-let allowShowCount = false;
-let show = 0;
 let cursorFrame = 0;
 let cursorSize = 64;
 let rightPosition = [{x:75, y:320}, {x:160, y:250}, {x:270, y:400}];
@@ -65,40 +63,51 @@ let transitionFrames = [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0];
 let visible = false;
 let transitionFrame = -1;
 
-context.fillStyle = 'yellow';
+context.fillStyle = "#DF9B26";
 context.textAlign = "center";
 
 let time = 0;
+
+let str = "";
+let index = 0;
+
+let menuSize = 512;
+let menuFrame = 0;
+
+function drawSplit(s, posx, posy, height) {
+  let toWrite = s.split('\n');
+  for (let i = 0; i < toWrite.length; i++)
+    context.fillText(toWrite[i], posx, posy + i * height);
+}
 
 function loop() {
   requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
 
   if (menu) {
-    context.drawImage(roomImage, 0, 0, roomImage.width, roomImage.height, 0, 0, canvas.width, canvas.height);
+    context.drawImage(roomImage, menuFrame * menuSize, 0, menuSize, roomImage.height, 0, 0, canvas.width, canvas.height);
     context.font = "30px 'okami'";
     context.fillText("T'échapperas-tu ?" , canvas.width / 2, 70);
     context.font = "20px 'okami'";
-    context.fillText("Choisis les bonnes", canvas.width / 2, 150);
-    context.fillText("issues pour t'échapper !", canvas.width / 2, 170);
+    drawSplit("Choisis les bonnes\nissues pour t'échapper !", canvas.width / 2, 150, 20);
     context.fillText("appuie pour jouer", canvas.width / 2, canvas.height - 10);
   } else if (!win && !gameOver) {
     context.drawImage(roomImage, 0, 0, roomImage.width, roomImage.height, 0, 0, canvas.width, canvas.height);
     context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, rightPosition[room].x, rightPosition[room].y, cursorSize, cursorSize);
     context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, wrongPosition[room].x, wrongPosition[room].y, cursorSize, cursorSize);
     context.textAlign = "center";
-    context.font = "30px 'okami'";
-    context.fillText(clues[room] , canvas.width / 2, 150);
+    context.font = "25px 'okami'";
+    drawSplit(str, canvas.width / 2, 70, 30);
   } else if (win) {
     context.drawImage(victory, 0, 0, victory.width, victory.height, 0, 0, canvas.width, canvas.height);
     context.font = "40px 'okami'";
-    context.fillText("Bravo, tu as réussi avec brio à t’évader en  " + time + "s!", canvas.width / 2, canvas.height / 2 + 60);
+    drawSplit("Bravo, tu as réussi\navec brio à t’évader en\n" + time + "s!", canvas.width / 2, canvas.height / 2 + 60, 40);
     context.font = "20px 'okami'";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 40);
   } else {
     context.drawImage(granMerKal, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     context.font = "40px 'okami'";
-    context.fillText("Perdu! Tu as manqué de vigilance!", canvas.width / 2, canvas.height / 2 + 70);
+    drawSplit("Perdu!\nTu as manqué\nde vigilance!", canvas.width / 2, canvas.height / 2 + 70, 40);
     context.font = "20px 'okami'";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
   }
@@ -110,7 +119,7 @@ document.addEventListener('click', function(e) {
   let relativeX = e.x - canvas.offsetLeft;
   let relativeY = e.y - canvas.offsetTop;
 
-  if (visible || allowShowCount)
+  if (visible || (room >= 0 && index < clues[room].length))
     return;
 
   if (!win && !menu && !gameOver) {
@@ -133,23 +142,13 @@ document.addEventListener('click', function(e) {
     win = false;
     room = -1;
     roomImage.src = "entree.jpg";
-    context.fillStyle = 'yellow';
+    context.fillStyle = "#DF9B26";
     gameOver = false;
     menu = true;
     roundValue = true;
+    str = "";
   }
  });
-
-function showButton() {
-  if (show == 1) {
-    visible = true;
-    show = 0;
-    allowShowCount = false;
-  }
-  if (!allowShowCount)
-    return;
-  show++;
-}
 
 function transition()
 {
@@ -163,6 +162,8 @@ function transition()
         context.fillStyle = 'red';
         gameOver = true;
       } else {
+        str = "";
+        index = 0;
         room++;
         roomImage.src = rooms[room];
       }
@@ -188,10 +189,27 @@ function animateCursor() {
     cursorFrame = 0;
 }
 
+function addLetter() {
+  if (menu || win || gameOver || room < 0 || index >= clues[room].length)
+    return;
+  if (clues[room][index] != ';')
+    str = str + clues[room][index];
+  index++;
+}
+
+function animateMenu() {
+  if (!menu)
+    return;
+  menuFrame++;
+  if (menuFrame > 30)
+    menuFrame = 0;
+}
+
 setInterval(transition, 50);
 setInterval(increment, 1000);
-setInterval(showButton, 500);
 setInterval(animateCursor, 80);
+setInterval(addLetter, 50);
+setInterval(animateMenu, 80);
 
 requestAnimationFrame(loop);
 </script>
