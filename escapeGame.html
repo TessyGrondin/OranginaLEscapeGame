@@ -93,8 +93,10 @@ function loop() {
     context.fillText("appuie pour jouer", canvas.width / 2, canvas.height - 10);
   } else if (!win && !gameOver) {
     context.drawImage(roomImage, 0, 0, roomImage.width, roomImage.height, 0, 0, canvas.width, canvas.height);
-    context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, rightPosition[room].x, rightPosition[room].y, cursorSize, cursorSize);
-    context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, wrongPosition[room].x, wrongPosition[room].y, cursorSize, cursorSize);
+    if (index >= clues[room].length) {
+      context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, rightPosition[room].x, rightPosition[room].y, cursorSize, cursorSize);
+      context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, wrongPosition[room].x, wrongPosition[room].y, cursorSize, cursorSize);
+    }
     context.textAlign = "center";
     context.font = "25px 'okami'";
     drawSplit(str, canvas.width / 2, 70, 30);
