@@ -49,6 +49,10 @@ let rooms = ["croisement.jpg", "salleDeBain.jpg", "cour.jpg", "haunted-house-hal
 let room = -1;
 
 let clues = ["1ère mission : quelle porte choisiras-tu?\nAttention, la victoire se cache dans les petits détails!", "Bravo, tu as fait le bon choix, te voici maintenant dans la salle de bain. 2 solutions pour s’évader : porte ou fenêtre? A toi de faire le bon choix!", "Tu as l’œil, bravo Enfin tu es proche de la sortie mais attention ce n’est pas fini! La porte du fond me semble bien mystérieuse, pas toi? Peut-être préfère tu passer par le portail"];
+let myFont = new FontFace('okami', 'url(Okami.otf)');
+myFont.load().then(function(font){
+  document.fonts.add(font);
+});
 
 let allowShowCount = false;
 let show = 0;
@@ -72,9 +76,9 @@ function loop() {
 
   if (menu) {
     context.drawImage(roomImage, 0, 0, roomImage.width, roomImage.height, 0, 0, canvas.width, canvas.height);
-    context.font = "30px Arial";
+    context.font = "30px 'okami'";
     context.fillText("T'échapperas-tu ?" , canvas.width / 2, 70);
-    context.font = "20px Arial";
+    context.font = "20px 'okami'";
     context.fillText("Choisis les bonnes", canvas.width / 2, 150);
     context.fillText("issues pour t'échapper !", canvas.width / 2, 170);
     context.fillText("appuie pour jouer", canvas.width / 2, canvas.height - 10);
@@ -83,19 +87,19 @@ function loop() {
     context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, rightPosition[room].x, rightPosition[room].y, cursorSize, cursorSize);
     context.drawImage(cursor, cursorFrame * cursorSize, 0, cursorSize, cursor.height, wrongPosition[room].x, wrongPosition[room].y, cursorSize, cursorSize);
     context.textAlign = "center";
-    context.font = "30px Arial";
+    context.font = "30px 'okami'";
     context.fillText(clues[room] , canvas.width / 2, 150);
   } else if (win) {
     context.drawImage(victory, 0, 0, victory.width, victory.height, 0, 0, canvas.width, canvas.height);
-    context.font = "40px Arial";
+    context.font = "40px 'okami'";
     context.fillText("Bravo, tu as réussi avec brio à t’évader en  " + time + "s!", canvas.width / 2, canvas.height / 2 + 60);
-    context.font = "20px Arial";
+    context.font = "20px 'okami'";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 40);
   } else {
     context.drawImage(granMerKal, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-    context.font = "40px Arial";
+    context.font = "40px 'okami'";
     context.fillText("Perdu! Tu as manqué de vigilance!", canvas.width / 2, canvas.height / 2 + 70);
-    context.font = "20px Arial";
+    context.font = "20px 'okami'";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 10);
   }
   if (transitionFrame != -1)
