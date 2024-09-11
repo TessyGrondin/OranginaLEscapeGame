@@ -119,6 +119,20 @@ document.addEventListener('click', function(e) {
   let relativeX = e.x - canvas.offsetLeft;
   let relativeY = e.y - canvas.offsetTop;
 
+  if (win) {
+    time = 0;
+    room = -1;
+    roomImage.src = "entree.png";
+    context.fillStyle = "#DF9B26";
+    index = 0;
+    roundValue = true;
+    str = "";
+    gameOver = false;
+    win = false;
+    menu = true;
+    return;
+  }
+
   if (visible || (room >= 0 && index < clues[room].length && !win && !gameOver))
     return;
 
