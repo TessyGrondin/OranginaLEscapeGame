@@ -73,6 +73,7 @@ let menuSize = 512;
 let menuFrame = 0;
 
 function drawSplit(s, posx, posy, height) {
+  str = str.toString();
   let toWrite = s.split('\n');
   for (let i = 0; i < toWrite.length; i++)
     context.fillText(toWrite[i], posx, posy + i * height);
