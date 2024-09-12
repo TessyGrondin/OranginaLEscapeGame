@@ -104,7 +104,7 @@ function loop() {
     context.font = "40px 'okami'";
     drawSplit("Bravo, tu as réussi\navec brio à t’évader en\n" + time + "s!", canvas.width / 2, canvas.height / 2 + 60, 40);
     context.font = "20px 'okami'";
-    context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 40);
+    context.fillText("appuie pour accéder au formulaire", canvas.width / 2, canvas.height - 40);
   } else {
     context.drawImage(granMerKal, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     context.font = "40px 'okami'";
@@ -131,6 +131,7 @@ document.addEventListener('click', function(e) {
     gameOver = false;
     win = false;
     menu = true;
+    window.location.href = "index.html";
     return;
   }
 
