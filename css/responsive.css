@@ -1,0 +1,79 @@
+@media (max-width: 1024px) {
+
+    h1 {
+    
+        text-transform: uppercase;
+        font-size: 2.5em;
+        font-weight: 900;
+        text-align: center;
+        padding-top: 10vh;
+        padding-bottom: 10vh;
+
+    }
+    
+    h2 {
+        text-transform: uppercase;
+        font-size: 1.8em;
+        font-weight: 900;
+        text-align: center;
+        margin-top: 10vh;
+        margin-bottom: 0;
+    }
+    
+    h3 {
+        text-transform: uppercase;
+        font-size: 1.5em;
+        font-weight: 900;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .info {
+        margin-bottom: 10vh;
+    }
+
+    .cards-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10vh;
+        width: 100%;
+    }
+
+    .howto .card {
+        margin-bottom: 1em;
+        width: 80vw;
+        padding:  4em 2.3em;
+    }
+
+    .howto .card p {
+        width: 40%;
+    }
+
+    .card-bg {
+        background-position-y: 0px;
+      }
+
+    .footer .container .row {
+        flex-direction: column;
+    }
+
+    .footer-col {
+        width: 80%;
+        padding: 0 15px;
+        margin-bottom: 1em;
+     }
+}
+
+@media (max-width: 750px) {
+
+    .howto .card p {
+        width: 70%;
+    }
+
+    .hero img {
+        width: 60vw;
+      }
+
+
+}

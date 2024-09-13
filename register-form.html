@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <title>Enregistre ton score - Orangina</title>
+</head>
+<body style="background-color: #25346B;" class="o-form" >
+
+    <header>
+      <nav class="nav-admin">
+        <button><a href="pre-game.html">Avant-jeu</a></button>
+        <button><a href="index.html">Accueil</a></button>
+        <button><a href="game.html">Jeu</a></button>
+        <button><a href="register-form.html">Formulaire</a></button>
+        <button><a href="thankyou.html">Remerciement</a></button>
+        <button><a href="post-game.html">Apres-jeu</a></button>
+      </nav>
+        <nav>
+            <img src="./assets/img/logo.png" alt="logo orangina">
+        </nav>
+    </header>
+    
+    <div class="hero2">
+      <h1 class="fadeInUp-animation">Complète le formulaire</h1>
+
+      <section class="howto">
+              <div class="card">
+                  <form>
+                    <div class="form-group">
+                      <label for="firstname">Prénom</label>
+                      <input type="firstname" class="form-control" id="firstname" placeholder="Ton prénom">
+                    </div>
+                    <div class="form-group">
+                      <label for="lastname">Nom</label>
+                      <input type="lastname" class="form-control" id="lastname" placeholder="Ton nom">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Adresse e-mail</label>
+                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="adresse@mail.com">
+                    </div>
+                    <div class="form-group">
+                      <label for="tel">Numéro de téléphone</label>
+                      <input type="tel" class="form-control" id="tel" placeholder="Téléphone">
+                    </div>
+                    <div class="form-group">
+                      <label for="ja">Justificatif d'achat</label>
+                      <input type="file" class="form-control" id="ja" placeholder="Téléphone">
+                    </div>
+                    <div class="form-check mb-3">
+                      <label class="form-check-label">
+                          <input class="form-check-input" type="checkbox" name="remember"> J'accepte le <a data-bs-toggle="modal" data-bs-target="#modal" href="#"> règlement du jeu</a>
+                      </label>
+                    </div>
+                    <div class="form-check mb-3">
+                      <label class="form-check-label">
+                          <input class="form-check-input" type="checkbox" name="remember"> J'accepte de recevoir des offres promotionnelles de Orangina Reunion
+                      </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary small-button">Envoyer</button>
+                  </form>
+              </div>
+  
+              <div id="modal" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Règlement</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h1>Règlement du Jeu Concours "Gagnez un voyage à Maurice"</h1>
+    
+                            <h2>Article 1 : Organisation du Jeu</h2>
+                            <p>La société XYZ (ci-après dénommée "l'Organisateur"), dont le siège social est situé au 123 Avenue des Champs-Élysées, Paris, organise un jeu concours gratuit et sans obligation d'achat intitulé "Gagnez un Week-end à Paris" du 1er juillet 2024 au 31 juillet 2024 inclus.</p>
+    
+                            <h2>Article 2 : Participants</h2>
+                            <p>Le jeu est ouvert à toute personne physique majeure résidant en France métropolitaine, à l'exclusion des membres du personnel de l'Organisateur et de leur famille, ainsi que de toutes personnes ayant participé à l'élaboration du jeu.</p>
+    
+                            <h2>Article 3 : Modalités de participation</h2>
+                            <p>Pour participer au jeu, les participants doivent :</p>
+                            <ol>
+                                <li>Se rendre sur le site internet <a href="http://www.xyz.com">www.xyz.com</a>.</li>
+                                <li>Remplir le formulaire de participation en ligne avec leurs coordonnées complètes (nom, prénom, adresse, e-mail, numéro de téléphone).</li>
+                                <li>Répondre correctement à une question posée sur le site.</li>
+                            </ol>
+                            <p>Une seule participation par personne est autorisée pendant toute la durée du jeu concours.</p>
+    
+                            <h2>Article 4 : Désignation du gagnant</h2>
+                            <p>Un tirage au sort sera effectué le 1er août 2024 parmi les participants ayant répondu correctement à la question. Le gagnant sera contacté par e-mail et/ou par téléphone dans un délai de 7 jours après le tirage au sort. Si le gagnant ne se manifeste pas dans un délai de 15 jours à compter de la date d'envoi de l'e-mail ou de l'appel téléphonique, il sera considéré comme ayant renoncé à son lot, et un nouveau tirage au sort sera effectué pour désigner un nouveau gagnant.</p>
+    
+                            <h2>Article 5 : Dotation</h2>
+                            <p>Le jeu concours est doté du prix suivant : un week-end pour deux personnes à Paris comprenant :</p>
+                            <ul>
+                                <li>Deux nuits dans un hôtel 4 étoiles (petit-déjeuner inclus).</li>
+                                <li>Deux billets aller-retour en train pour Paris.</li>
+                                <li>Un dîner pour deux personnes dans un restaurant étoilé.</li>
+                            </ul>
+                            <p>Le séjour doit être réalisé avant le 31 décembre 2024. Les dates seront choisies en fonction des disponibilités de l'hôtel et des billets de train. Le prix ne peut être ni échangé, ni repris, ni faire l'objet d'une contrepartie financière.</p>
+    
+                            <h2>Article 6 : Responsabilité</h2>
+                            <p>L'Organisateur ne saurait être tenu pour responsable si, en cas de force majeure ou d'événements indépendants de sa volonté, le jeu concours devait être modifié, écourté ou annulé. L'Organisateur se réserve le droit de procéder à toutes vérifications nécessaires concernant l'identité et l'adresse des participants.</p>
+    
+                            <h2>Article 7 : Informatique et Libertés</h2>
+                            <p>Les informations recueillies sur les participants sont enregistrées et utilisées par l'Organisateur pour les nécessités de leur participation et l'attribution des lots. Conformément à la loi "Informatique et Libertés" du 6 janvier 1978 modifiée, les participants disposent d'un droit d'accès, de rectification et de suppression des données les concernant. Toute demande devra être adressée par écrit à l'Organisateur à l'adresse suivante : XYZ, 123 Avenue des Champs-Élysées, Paris.</p>
+    
+                            <h2>Article 8 : Acceptation du règlement</h2>
+                            <p>La participation à ce jeu concours implique l'acceptation pleine et entière du présent règlement. Le règlement complet est disponible gratuitement sur simple demande à l'adresse de l'Organisateur.</p>
+    
+                            <h2>Article 9 : Litiges</h2>
+                            <p>Le présent règlement est soumis à la loi française. En cas de désaccord sur son interprétation ou son application, et à défaut d'accord amiable, les litiges seront soumis aux tribunaux compétents de Paris.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+              </div> 
+      </section>
+    </div>
+
+    
+   
+
+    <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="footer-col">
+              <a href="./privacypolicy.html">Réglement du jeu</a>
+            </div>
+            <div class="footer-col">
+                <h4>Abonne-toi à Orangina Réunion !</h4>
+                <div class="social-links">
+                  <a href="#"><i class="fab fa-instagram"></i></a>
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-x-twitter"></i></a>
+                  <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+              </div>
+            <div class="footer-col">
+                <a href="./privacypolicy.html">Mentions légales</a>
+            </div>
+
+          </div>
+        </div>
+      </footer>
+
+      <script src="https://kit.fontawesome.com/6d240af3ec.js" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

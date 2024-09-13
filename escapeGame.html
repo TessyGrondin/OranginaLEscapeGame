@@ -3,10 +3,17 @@
 <head>
   <title>Escape Game</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
   <style>
   html, body {
     height: 100%;
     margin: 0;
+    background-image: url(./assets/img/halloween-background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 0px;
   }
 
   body {
@@ -17,18 +24,33 @@
 
   canvas {
     border: 1px solid black;
+  display : none;
   }
+
+  .play-button {
+	font-family: okami;
+	}
   </style>
 </head>
 <body>
+<audio id="laugh" src="laugh.mp3" preload="auto"></audio>
+<audio id="sound" src="sound.mp3" preload="auto"></audio>
+<audio id="ovoice" src="orangina.mp3" preload="auto"></audio>
+<button onclick="startGame()" id="btn-start" class="play-button"> Démarrer le jeu</button>
 <canvas width="375" height="667" id="game"></canvas>
 <script>
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
+let sound = document.getElementById("sound");
+let laugh = document.getElementById("laugh");
+let ovoice = document.getElementById("ovoice");
+sound.loop = true;
+
 let win = false;
 let gameOver = false;
 let menu = true;
+let winSound = true;
 
 let roundValue = true;
 
@@ -88,7 +110,7 @@ function loop() {
     context.font = "30px 'okami'";
     drawSplit("Bienvenu dans la\nmaison de l'horreur !" , canvas.width / 2, 70, 30);
     context.font = "20px 'okami'";
-    drawSplit("Choisis les bonnes\nissues pour t'échapper !", canvas.width / 2, 150, 20);
+    drawSplit("Pour sortir de la maison,\ntu devras choisir entre deux options.\nL'une te permettra d'avancer,\nl'autre te mènera à l'échec.\nObserve attentivement chaque élément autour\nde toi pour trouver un indice qui te guidera.", canvas.width / 2, 150, 20);
     context.fillText("appuie pour jouer", canvas.width / 2, canvas.height - 40);
   } else if (!win && !gameOver) {
     context.drawImage(roomImage, 0, 0, roomImage.width, roomImage.height, 0, 0, canvas.width, canvas.height);
@@ -105,12 +127,21 @@ function loop() {
     drawSplit("Bravo, tu as réussi\navec brio à t’évader en\n" + time + "s!", canvas.width / 2, canvas.height / 2 + 60, 40);
     context.font = "20px 'okami'";
     context.fillText("appuie pour accéder au formulaire", canvas.width / 2, canvas.height - 40);
+
+    sound.pause();
+    if (winSound)
+      ovoice.play();
+    winSound = false;
+
   } else {
     context.drawImage(granMerKal, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     context.font = "40px 'okami'";
     drawSplit("Perdu!\nTu as manqué\nde vigilance!", canvas.width / 2, canvas.height / 2 + 70, 40);
     context.font = "20px 'okami'";
     context.fillText("appuie pour rejouer", canvas.width / 2, canvas.height - 40);
+
+    sound.pause();
+    laugh.play();
   }
   if (transitionFrame != -1)
     context.drawImage(transitionImage, transitionFrames[transitionFrame] * canvas.width, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
@@ -131,7 +162,7 @@ document.addEventListener('click', function(e) {
     gameOver = false;
     win = false;
     menu = true;
-    window.location.href = "index.html";
+    window.location.href = "register-form.html";
     return;
   }
 
@@ -162,6 +193,9 @@ document.addEventListener('click', function(e) {
     gameOver = false;
     win = false;
     menu = true;
+    sound.play();
+    laugh.pause();
+    laugh.currentTime = 0;
   }
  });
 
@@ -227,6 +261,15 @@ setInterval(addLetter, 50);
 setInterval(animateMenu, 80);
 
 requestAnimationFrame(loop);
+
+	function startGame() {
+		sound.play();
+    menu = true;
+		document.getElementById("btn-start").style.display = "none";
+		document.getElementById("game").style.display = "block";
+	}
+
 </script>
+
 </body>
 </html>
